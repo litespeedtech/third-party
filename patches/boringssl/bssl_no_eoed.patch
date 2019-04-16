@@ -1,0 +1,31 @@
+commit 51875a39a01232359f1e13c1d428e95187034076
+Author: Dmitri Tikhonov <dtikhonov@litespeedtech.com>
+Date:   Wed Feb 27 14:39:27 2019 -0500
+
+    Do not send EndOfEarlyData in QUIC
+
+diff --git a/ssl/tls13_client.cc b/ssl/tls13_client.cc
+index ac97165..d3aec8e 100644
+--- a/ssl/tls13_client.cc
++++ b/ssl/tls13_client.cc
+@@ -629,12 +629,14 @@ static enum ssl_hs_wait_t do_send_end_of_early_data(SSL_HANDSHAKE *hs) {
+ 
+   if (ssl->s3->early_data_accepted) {
+     hs->can_early_write = false;
+-    ScopedCBB cbb;
+-    CBB body;
+-    if (!ssl->method->init_message(ssl, cbb.get(), &body,
+-                                   SSL3_MT_END_OF_EARLY_DATA) ||
+-        !ssl_add_message_cbb(ssl, cbb.get())) {
+-      return ssl_hs_error;
++    if (ssl->quic_method == nullptr) {
++      ScopedCBB cbb;
++      CBB body;
++      if (!ssl->method->init_message(ssl, cbb.get(), &body,
++                                     SSL3_MT_END_OF_EARLY_DATA) ||
++          !ssl_add_message_cbb(ssl, cbb.get())) {
++        return ssl_hs_error;
++      }
+     }
+   }
+ 
