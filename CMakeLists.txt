@@ -52,3 +52,22 @@ ExternalProject_Add(brotli
   INSTALL_COMMAND
     make install
 )
+
+ExternalProject_Add(IP2Location-C-Library
+  GIT_REPOSITORY
+    https://github.com/chrislim2888/IP2Location-C-Library.git
+  GIT_TAG
+    8.0.4
+  CONFIGURE_COMMAND
+    autoreconf -i -v --force
+            COMMAND
+    ./configure --prefix=${CMAKE_SOURCE_DIR}
+  BUILD_ALWAYS
+    1
+  BUILD_IN_SOURCE
+    1
+  BUILD_COMMAND
+    make
+  INSTALL_COMMAND
+    make install
+)
