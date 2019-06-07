@@ -10,3 +10,6 @@
 [submodule "src/libmaxminddb"]
 	path = src/libmaxminddb
 	url = https://github.com/maxmind/libmaxminddb.git
+[submodule "src/ip2loc"]
+	path = src/ip2loc
+	url = https://github.com/chrislim2888/IP2Location-C-Library.git
