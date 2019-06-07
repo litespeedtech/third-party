@@ -1,3 +1,6 @@
 [submodule "src/brotli"]
 	path = src/brotli
 	url = https://github.com/google/brotli.git
+[submodule "src/libexpat"]
+	path = src/libexpat
+	url = https://github.com/libexpat/libexpat.git
