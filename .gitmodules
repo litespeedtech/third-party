@@ -7,3 +7,6 @@
 [submodule "src/libinjection"]
 	path = src/libinjection
 	url = https://github.com/client9/libinjection.git
+[submodule "src/libmaxminddb"]
+	path = src/libmaxminddb
+	url = https://github.com/maxmind/libmaxminddb.git
