@@ -13,3 +13,6 @@
 [submodule "src/ip2loc"]
 	path = src/ip2loc
 	url = https://github.com/chrislim2888/IP2Location-C-Library.git
+[submodule "src/zlib"]
+	path = src/zlib
+	url = https://github.com/madler/zlib.git
