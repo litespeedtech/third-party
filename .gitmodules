@@ -22,3 +22,6 @@
 [submodule "src/udns"]
 	path = src/udns
 	url = https://github.com/ortclib/udns.git
+[submodule "src/unittest-cpp"]
+	path = src/unittest-cpp
+	url = https://github.com/unittest-cpp/unittest-cpp.git
