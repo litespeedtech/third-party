@@ -5,7 +5,7 @@ cd ..
 CUR_PREFIX=`pwd`
 cd src
 
-cd luajit-2.0
+cd luajit
 
 make install PREFIX=$CUR_PREFIX
 

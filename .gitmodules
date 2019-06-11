@@ -22,3 +22,6 @@
 [submodule "src/unittest-cpp"]
 	path = src/unittest-cpp
 	url = https://github.com/unittest-cpp/unittest-cpp.git
+[submodule "src/luajit"]
+	path = src/luajit
+	url = https://github.com/LuaJIT/LuaJIT.git
