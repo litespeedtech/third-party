@@ -2,7 +2,10 @@
 BUILD_LIBS="brotli bssl expat geoip ip2loc libmaxminddb luajit pcre psol udns unittest-cpp zlib lmdb curl libmodsec"
 
 cd `dirname "$0"`
+cd ..
 
+git submodule init --update
+cd script
 
 for BUILD_LIB in $BUILD_LIBS
 do 
