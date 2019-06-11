@@ -9,5 +9,9 @@ cd luajit-2.0
 
 make install PREFIX=$CUR_PREFIX
 
+cd ../..
+cp patches/libtool/libluajit-5.1.la lib/libluajit-5.1.la
+echo "libdir='$CUR_PREFIX/lib'" >> lib/libluajit-5.1.la
 
+rm -f lib/libluajit*.so.*
 

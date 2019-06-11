@@ -13,7 +13,7 @@ if [ ! -d lloyd-yajl-66cb08c ]; then
     ./configure -p $PREFIX
     make install
     cd ../..
-    cp patches/yajl/libyajl.la lib/libyajl.la
+    cp patches/libtool/libyajl.la lib/libyajl.la
     echo "libdir='$PREFIX/lib'" >> lib/libyajl.la
     mv lib/libyajl_s.a lib/libyajl.a
     rm -f lib/libyajl.so*
