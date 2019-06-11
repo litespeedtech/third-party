@@ -4,7 +4,7 @@ BUILD_LIBS="brotli bssl expat geoip ip2loc libmaxminddb luajit pcre psol udns un
 cd `dirname "$0"`
 cd ..
 
-git submodule init --update
+git submodule update --init
 cd script
 
 for BUILD_LIB in $BUILD_LIBS
