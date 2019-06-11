@@ -12,3 +12,4 @@ git checkout 1.3.2
 CPPFLAGS="-I../include" ./configure --disable-tests --prefix=$PREFIX -enable-shared=no --disable-binaries
 
 make install
+cp src/libmaxminddb.la $PREFIX/lib
