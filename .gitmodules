@@ -22,3 +22,6 @@
 [submodule "src/luajit"]
 	path = src/luajit
 	url = https://github.com/LuaJIT/LuaJIT.git
+[submodule "src/zlib"]
+	path = src/zlib
+	url = https://github.com/cloudflare/zlib.git
