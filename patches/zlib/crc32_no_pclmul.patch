@@ -1,0 +1,24 @@
+--- a/crc32.c
++++ b/crc32.c
+@@ -268,6 +268,11 @@ local unsigned long crc32_generic(crc, buf, len)
+     return crc ^ 0xffffffffUL;
+ }
+ 
++static int s_no_pclmul = 0;
++
++void set_no_pclmul()
++{    s_no_pclmul = 1;   }
++
+ #ifdef HAS_PCLMUL
+ 
+ #define PCLMUL_MIN_LEN 64
+@@ -286,7 +291,7 @@ uLong crc32(crc, buf, len)
+     const Bytef *buf;
+     uInt len;
+ {
+-    if (len < PCLMUL_MIN_LEN + PCLMUL_ALIGN  - 1)
++    if (s_no_pclmul || len < PCLMUL_MIN_LEN + PCLMUL_ALIGN  - 1)
+       return crc32_generic(crc, buf, len);
+ 
+     /* Handle the leading patial chunk */
+
