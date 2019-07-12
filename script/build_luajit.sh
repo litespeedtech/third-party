@@ -7,7 +7,7 @@ cd src
 
 cd luajit
 
-make install PREFIX=$CUR_PREFIX
+make install PREFIX=$CUR_PREFIX CFLAGS="-fPIC"
 
 cd ../..
 cp patches/libtool/libluajit-5.1.la lib/libluajit-5.1.la
