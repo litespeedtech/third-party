@@ -10,7 +10,7 @@ if [ ! -d "zlib" ]  ; then
 fi
     
 cd zlib
-CFLAGS="-fPIC" ./configure --prefix=$PREFIX --static
+CFLAGS="-fPIC -O3" ./configure --prefix=$PREFIX --static
 
 make install
 
