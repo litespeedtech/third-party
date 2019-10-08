@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 cd `dirname "$0"`
 cd ..
@@ -13,7 +13,7 @@ fi
     cd libxml2
 
     CPPFLAGS="-fPIC $CPPFLAGS" ./configure --prefix=$PREFIX --with-python=no --disable-shared
-    make -j4
+    make
 
     
     if [ ! -f ./.libs/libxml2.a  ] ; then
