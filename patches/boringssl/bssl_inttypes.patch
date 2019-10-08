@@ -22,3 +22,27 @@ index 62db076..86fa548 100644
  #include <openssl/base.h>
  
  #if !defined(OPENSSL_WINDOWS)
+diff --git a/util/embed_test_data.go b/util/embed_test_data.go
+index 5376fdd49..a990bb3b9 100644
+--- a/util/embed_test_data.go
++++ b/util/embed_test_data.go
+@@ -90,6 +90,7 @@ func main() {
+ 
+ #include <algorithm>
+ #include <string>
++#include <stdio.h>
+ 
+
+ `)
+diff --git a/tool/internal.h b/tool/internal.h
+index b626270f1..0834adea2 100644
+--- a/tool/internal.h
++++ b/tool/internal.h
+@@ -16,6 +16,7 @@
+ #define OPENSSL_HEADER_TOOL_INTERNAL_H
+ 
+ #include <openssl/base.h>
++#include <stdio.h>
+ 
+ #include <string>
+ #include <vector>

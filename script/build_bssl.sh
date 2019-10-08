@@ -21,14 +21,15 @@ git reset --hard
 git checkout master
 git pull
 
-git checkout 32e59d2d3264e4e104b355ef73663b8b79ac4093
+#git checkout 32e59d2d3264e4e104b355ef73663b8b79ac4093
+git checkout 49de1fc291
 
 rm -rf build
 
 #patch -p1 < ../bssl_lstls.patch
 patch -p1 < ../../patches/boringssl/bssl_inttypes.patch
 patch -p1 < ../../patches/boringssl/bssl_max_early_data_sz.patch
-patch -p1 < ../../patches/boringssl/bssl_no_eoed.patch
+#patch -p1 < ../../patches/boringssl/bssl_no_eoed.patch
 
 mkdir build
 cd build
