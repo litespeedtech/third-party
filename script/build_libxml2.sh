@@ -12,7 +12,7 @@ if [ ! -e "libxml2" ] ; then
 fi
     cd libxml2
 
-    CPPFLAGS="-fPIC $CPPFLAGS" ./configure --prefix=$PREFIX --with-python=no --disable-shared
+    CPPFLAGS="-fPIC $CPPFLAGS" ./configure --prefix=$PREFIX --with-python=no --disable-shared --with-lzma=no
     make
 
     

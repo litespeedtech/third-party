@@ -11,6 +11,11 @@ if [ ! -d lloyd-yajl-66cb08c ]; then
     tar -xvzf yajl-2.1.0.tar.gz
     cd lloyd-yajl-66cb08c
     ./configure -p $PREFIX
+
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX="$PREFIX" -DCMAKE_C_FLAGS="-fPIC" ..
+    cd ..
+
     make install
     cd ../..
     cp patches/libtool/libyajl.la lib/libyajl.la
