@@ -9,7 +9,7 @@ if [ ! -d "lmdb" ]  ; then
 fi
     
     cd lmdb/libraries/liblmdb/
-    make
+    XCFLAGS=-fPIC make
     
     if [ ! -f liblmdb.a ] ; then
         echo Something wrong, liblmdb.a not exist
