@@ -11,7 +11,7 @@ if [ ! -d "curl" ] ; then
 fi
 
     cd curl
-
+    git checkout curl-7_65_3
     ./buildconf 
     LIBS=-lpthread ./configure --prefix=$PREFIX --with-ssl=$PREFIX --with-brotli=no  --enable-shared=no --enable-ldap=no
     make
