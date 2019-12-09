@@ -21,10 +21,10 @@ git checkout master
 git pull
 git checkout $RELEASE
 
-make clean
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17' clean
 ./config $DEBUG --prefix=$PREFIX --openssldir=$PREFIX/lib/openssl -DPURIFY no-shared no-dso
-make depend
-make -j4
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17' depend
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 
 rm -rf ../../include/openssl
 mkdir ../../include//openssl

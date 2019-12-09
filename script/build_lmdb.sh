@@ -9,7 +9,7 @@ if [ ! -d "lmdb" ]  ; then
 fi
     
     cd lmdb/libraries/liblmdb/
-    XCFLAGS=-fPIC make
+    XCFLAGS=-fPIC make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
     
     if [ ! -f liblmdb.a ] ; then
         echo Something wrong, liblmdb.a not exist
