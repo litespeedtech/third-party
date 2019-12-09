@@ -7,6 +7,7 @@ cd src
 
 if [ ! -d "boringssl" ]; then
     git clone https://github.com/raihan001/boringssl.git
+    git checkout ARM64
 fi
 
 if [ -d "go" ]; then
