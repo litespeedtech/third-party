@@ -14,8 +14,8 @@ git reset --hard
 git checkout v1.8.0
 
 mkdir out && cd out
-cmake ..
-make -j2
+cmake EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17 -DCMAKE_POSITION_INDEPENDENT_CODE=on' ..
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 
 cp libflatbuffers.a ../../../lib
 cp flatc  ../../../bin

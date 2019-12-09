@@ -5,7 +5,7 @@ PREFIX=`pwd`
 cd src
 
 cd unittest-cpp
-make
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 
 mkdir -p ../../include/unittest-cpp/Posix
 cp src/*.h ../../include/unittest-cpp

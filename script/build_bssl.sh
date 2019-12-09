@@ -6,7 +6,8 @@ cd src
 
 
 if [ ! -d "boringssl" ]; then
-    git clone https://github.com/google/boringssl.git
+    git clone https://github.com/raihan001/boringssl.git
+    git checkout ARM64
 fi
 
 if [ -d "go" ]; then
@@ -22,7 +23,7 @@ git checkout master
 git pull
 
 #git checkout 32e59d2d3264e4e104b355ef73663b8b79ac4093
-git checkout 49de1fc291
+git checkout ARM64
 
 rm -rf build
 
@@ -33,12 +34,12 @@ patch -p1 < ../../patches/boringssl/bssl_max_early_data_sz.patch
 
 mkdir build
 cd build
-cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
-make -j4
+cmake EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17 -DCMAKE_POSITION_INDEPENDENT_CODE=on' -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC" ../ 
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 cd ssl
-make -j4
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 cd ../decrepit
-make -j4
+make -j4 EXTRA_CMAKE_OPTIONS='-DCMAKE_C_COMPILER=arm64-linux-gcc -DCMAKE_CXX_COMPILER=arm64-linux-gnu-g++ -DCXX_STANDARD_REQUIRED=c++17'
 cd ..
 
 
