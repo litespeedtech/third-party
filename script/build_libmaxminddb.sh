@@ -6,7 +6,7 @@ PREFIX=`pwd`
 
 cd src/libmaxminddb
 git reset --hard
-git checkout 1.3.2
+git checkout 1.4.2
 
 ./bootstrap
 CPPFLAGS="-I../include" ./configure --disable-tests --prefix=$PREFIX -enable-shared=no --disable-binaries
