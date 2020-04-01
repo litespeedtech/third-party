@@ -21,8 +21,8 @@ git reset --hard
 git checkout master
 git pull
 
-#git checkout 32e59d2d3264e4e104b355ef73663b8b79ac4093
-git checkout 49de1fc291
+#git checkout 49de1fc291
+git checkout bfe527fa35735e8e045cbfb42b012e13ca68f9cf
 
 rm -rf build
 
