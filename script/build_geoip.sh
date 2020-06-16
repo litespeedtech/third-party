@@ -10,8 +10,8 @@ if [ ! -d "geoip-api-c" ]; then
 fi
 cd geoip-api-c
 git reset --hard
-git checkout v1.6.11
+git checkout v1.6.12
 
 ./bootstrap
-CPPFLAGS="-I../../include" ./configure --prefix=$PREFIX --enable-shared=no
+CPPFLAGS="-I../../include -fPIC" ./configure --prefix=$PREFIX --enable-shared=no
 	make install
