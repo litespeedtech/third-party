@@ -1,5 +1,5 @@
 #!/bin/sh
-BUILD_LIBS="brotli zlib bssl expat geoip ip2loc libmaxminddb luajit pcre psol udns unittest-cpp lmdb openldap libinjection flatbuffers zmq "
+BUILD_LIBS="brotli zlib bssl bcrypt expat geoip ip2loc libmaxminddb luajit pcre psol udns unittest-cpp lmdb openldap libinjection flatbuffers zmq "
 
 cd `dirname "$0"`
 cd ..
