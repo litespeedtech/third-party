@@ -11,7 +11,7 @@ fi
 cd flatbuffers
 
 git reset --hard
-git checkout v1.8.0
+git checkout v1.11.0
 
 mkdir out && cd out
 cmake ..
