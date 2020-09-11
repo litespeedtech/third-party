@@ -8,7 +8,8 @@ PREFIX=`pwd`
 cd src/ip2loc
 
 git reset --hard
-git checkout 8.0.8
+git pull
+git checkout 8.0.9
 
 autoreconf -i -v --force
 ./configure --prefix=$PREFIX -enable-shared=no 
