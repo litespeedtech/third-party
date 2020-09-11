@@ -14,3 +14,4 @@ CPPFLAGS="-I../include" ./configure --disable-tests --prefix=$PREFIX -enable-sha
 
 make install
 cp src/libmaxminddb.la $PREFIX/lib
+cp include/maxminddb_config.h $PREFIX/include
