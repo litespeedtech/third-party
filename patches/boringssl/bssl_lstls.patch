@@ -1,24 +1,24 @@
 diff --git a/include/openssl/ssl.h b/include/openssl/ssl.h
-index 0d5a444d..422e56e3 100644
+index 3e4b638cd..1221c6a0f 100644
 --- a/include/openssl/ssl.h
 +++ b/include/openssl/ssl.h
-@@ -3237,6 +3237,11 @@ OPENSSL_EXPORT int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
+@@ -3616,6 +3616,11 @@ OPENSSL_EXPORT int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
                                 const uint8_t **out_write_iv,
                                 size_t *out_iv_len);
  
 +OPENSSL_EXPORT EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl);
 +OPENSSL_EXPORT const uint8_t *SSL_get_write_iv_sequence(SSL *ssl,
 +                                                        uint8_t **sequence,
-+							char *noad);
++                                                        char *noad);
 +
- // SSL_get_key_block_len returns the length of |ssl|'s key block.
+ // SSL_get_key_block_len returns the length of |ssl|'s key block. It is an error
+ // to call this function during a handshake.
  OPENSSL_EXPORT size_t SSL_get_key_block_len(const SSL *ssl);
- 
 diff --git a/ssl/internal.h b/ssl/internal.h
-index 0535b8de..d767294f 100644
+index 9dd206e37..44f467814 100644
 --- a/ssl/internal.h
 +++ b/ssl/internal.h
-@@ -741,7 +741,11 @@ class SSLAEADContext {
+@@ -849,7 +849,11 @@ class SSLAEADContext {
  
    bool GetIV(const uint8_t **out_iv, size_t *out_iv_len) const;
  
@@ -32,20 +32,20 @@ index 0535b8de..d767294f 100644
    // necessary.
    Span<const uint8_t> GetAdditionalData(uint8_t storage[13], uint8_t type,
 diff --git a/ssl/ssl_aead_ctx.cc b/ssl/ssl_aead_ctx.cc
-index 335f6f48..22f990dd 100644
+index 0bad2661a..42e6c3061 100644
 --- a/ssl/ssl_aead_ctx.cc
 +++ b/ssl/ssl_aead_ctx.cc
-@@ -433,4 +433,5 @@ bool SSLAEADContext::GetIV(const uint8_t **out_iv, size_t *out_iv_len) const {
+@@ -429,4 +429,5 @@ bool SSLAEADContext::GetIV(const uint8_t **out_iv, size_t *out_iv_len) const {
           EVP_AEAD_CTX_get_iv(ctx_.get(), out_iv, out_iv_len);
  }
  
 +
  BSSL_NAMESPACE_END
 diff --git a/ssl/ssl_lib.cc b/ssl/ssl_lib.cc
-index 13b9cacc..e912aa96 100644
+index 10a97ea94..26ad1e318 100644
 --- a/ssl/ssl_lib.cc
 +++ b/ssl/ssl_lib.cc
-@@ -2546,6 +2546,18 @@ int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
+@@ -2772,6 +2772,18 @@ int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
    return 1;
  }
  

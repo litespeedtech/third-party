@@ -23,7 +23,8 @@ git pull
 
 #git checkout 49de1fc291
 #git checkout bfe527fa35735e8e045cbfb42b012e13ca68f9cf
-git checkout 251b5169fd44345f455438312ec4e18ae07fd58c
+#git checkout 251b5169fd44345f455438312ec4e18ae07fd58c
+git checkout b117a3a0b7bd11fe6ebd503ec6b45d6b910b41a1
 
 rm -rf build
 
@@ -34,7 +35,7 @@ patch -p1 < ../../patches/boringssl/bssl_max_early_data_sz.patch
 
 mkdir build
 cd build
-cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
+cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC" -DCMAKE_CXX_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC"
 make -j4
 cd ssl
 make -j4
