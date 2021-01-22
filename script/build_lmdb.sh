@@ -3,12 +3,28 @@ cd `dirname "$0"`
 cd ..
 PREFIX=`pwd`
 cd src
+REMOTE_URL='https://git.openldap.org/openldap/openldap.git'
+
+if [ -d "lmdb" ]  ; then
+    CUR_REMOTE=`git config --file=./lmdb/.git/config --get remote.origin.url`
+    if [ "${REMOTE_URL}" = "${CUR_REMOTE}" ]; then
+        echo 'Remote is set up, OK'
+    else
+        echo 'Using old remote lmdb, delete and re-fetch.'
+        rm -rf ./lmdb
+    fi
+fi
 
 if [ ! -d "lmdb" ]  ; then
-    git clone https://github.com/LMDB/lmdb.git
+    git clone https://git.openldap.org/openldap/openldap.git lmdb
 fi
+
+cd lmdb
+git checkout master
+git pull
+git checkout LMDB_0.9.27
     
-    cd lmdb/libraries/liblmdb/
+    cd libraries/liblmdb/
     XCFLAGS=-fPIC make
     
     if [ ! -f liblmdb.a ] ; then
