@@ -19,7 +19,7 @@ fi
 
     mkdir build
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DBUILD_SHARED=OFF -DCMAKE_BUILD_TYPE=Debug -DWITH_PERF_TOOL=OFF -DZMQ_BUILD_TESTS=OFF ..
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DBUILD_SHARED=OFF -DCMAKE_BUILD_TYPE=Debug -DWITH_PERF_TOOL=OFF -DZMQ_BUILD_TESTS=OFF -DWITH_LIBSODIUM=OFF ..
     make 
 #    ./autogen.sh 
 #    ./configure --prefix=$PREFIX --enable-shared=no
