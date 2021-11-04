@@ -10,6 +10,18 @@ index f699fc8..837267f 100644
  #include <openssl/base.h>
  
  #include <stdio.h>
+diff --git a/crypto/fipsmodule/rand/fork_detect_test.cc b/crypto/fipsmodule/rand/fork_detect_test.cc
+index ab48512..cae3cb5 100644
+--- a/crypto/fipsmodule/rand/fork_detect_test.cc
++++ b/crypto/fipsmodule/rand/fork_detect_test.cc
+@@ -12,6 +12,7 @@
+  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
+ 
++#include <cinttypes>
+ #include <openssl/base.h>
+ 
+ // TSAN cannot cope with this test and complains that "starting new threads
 diff --git a/ssl/test/bssl_shim.cc b/ssl/test/bssl_shim.cc
 index 62db076..86fa548 100644
 --- a/ssl/test/bssl_shim.cc
@@ -42,7 +54,33 @@ index b626270f1..0834adea2 100644
  #define OPENSSL_HEADER_TOOL_INTERNAL_H
  
  #include <openssl/base.h>
+ #include <openssl/span.h>
 +#include <stdio.h>
  
  #include <string>
- #include <vector>
+ #include <utility>
+diff --git a/crypto/refcount_c11.c b/crypto/refcount_c11.c
+index 0a331a4..c929936 100644
+--- a/crypto/refcount_c11.c
++++ b/crypto/refcount_c11.c
+@@ -26,13 +26,13 @@
+ 
+ 
+ // See comment above the typedef of CRYPTO_refcount_t about these tests.
+-static_assert(alignof(CRYPTO_refcount_t) == alignof(_Atomic CRYPTO_refcount_t),
+-              "_Atomic alters the needed alignment of a reference count");
+-static_assert(sizeof(CRYPTO_refcount_t) == sizeof(_Atomic CRYPTO_refcount_t),
+-              "_Atomic alters the size of a reference count");
++//static_assert(alignof(CRYPTO_refcount_t) == alignof(_Atomic CRYPTO_refcount_t),
++//              "_Atomic alters the needed alignment of a reference count");
++//static_assert(sizeof(CRYPTO_refcount_t) == sizeof(_Atomic CRYPTO_refcount_t),
++//              "_Atomic alters the size of a reference count");
+ 
+-static_assert((CRYPTO_refcount_t)-1 == CRYPTO_REFCOUNT_MAX,
+-              "CRYPTO_REFCOUNT_MAX is incorrect");
++//static_assert((CRYPTO_refcount_t)-1 == CRYPTO_REFCOUNT_MAX,
++//              "CRYPTO_REFCOUNT_MAX is incorrect");
+ 
+ void CRYPTO_refcount_inc(CRYPTO_refcount_t *in_count) {
+   _Atomic CRYPTO_refcount_t *count = (_Atomic CRYPTO_refcount_t *) in_count;
+
