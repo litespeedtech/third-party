@@ -4,7 +4,7 @@ cd ..
 PREFIX=`pwd`
 cd src
 
-PACKAGE=pcre-8.43
+PACKAGE=pcre-8.45
 
 if [ ! -d $PACKAGE ]; then
     wget https://ftp.exim.org/pub/pcre/$PACKAGE.tar.gz
