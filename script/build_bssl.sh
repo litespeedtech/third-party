@@ -43,6 +43,12 @@ cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_
 #cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC" -DCMAKE_CXX_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC"
 make -j4
 
+cd ssl
+make -j4
+cd ../decrepit
+make -j4
+cd ..
+
 cp crypto/libcrypto.a ../../../lib
 cp ssl/libssl.a    ../../../lib
 cp decrepit/libdecrepit.a ../../../lib
