@@ -4,7 +4,7 @@ cd ..
 PREFIX=`pwd`
 cd src
 
-PACKAGE=php-7.4.30
+PACKAGE=php-7.4.33
 
 if [ ! -d $PACKAGE ]; then
     wget https://www.php.net/distributions/$PACKAGE.tar.gz
