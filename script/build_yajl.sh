@@ -6,9 +6,9 @@ cd src
 
 
     # Install YAJL2
-    wget http://github.com/lloyd/yajl/tarball/2.1.0 -O yajl-2.1.0.tar.gz
+    wget https://github.com/lloyd/yajl/archive/refs/tags/2.1.0.tar.gz -O yajl-2.1.0.tar.gz
     tar -xvzf yajl-2.1.0.tar.gz
-    cd lloyd-yajl-66cb08c
+    cd yajl-2.1.0
     ./configure -p $PREFIX
 
     cd build
