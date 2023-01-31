@@ -11,7 +11,7 @@ git clone https://github.com/openldap/openldap.git
 fi
 
 cd openldap
-git checkout OPENLDAP_REL_ENG_2_4_46
+git checkout OPENLDAP_REL_ENG_2_4_58
 
 
 LD_FLAGS="-L$PREFIX/lib -L/usr/local/lib -ldecrepit -lpthread"
