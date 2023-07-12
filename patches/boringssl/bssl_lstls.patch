@@ -1,19 +1,17 @@
-diff --git a/include/openssl/ssl.h b/include/openssl/ssl.h
-index 3e4b638cd..1221c6a0f 100644
 --- a/include/openssl/ssl.h
 +++ b/include/openssl/ssl.h
-@@ -3616,6 +3616,11 @@ OPENSSL_EXPORT int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
-                                const uint8_t **out_write_iv,
-                                size_t *out_iv_len);
+@@ -4015,6 +4015,11 @@ OPENSSL_EXPORT int SSL_CTX_get_ex_new_index(long argl, void *argp,
+ 
+ // Low-level record-layer state.
  
 +OPENSSL_EXPORT EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl);
 +OPENSSL_EXPORT const uint8_t *SSL_get_write_iv_sequence(SSL *ssl,
-+                                                        uint8_t **sequence,
++                                                        uint64_t **sequence,
 +                                                        char *noad);
 +
- // SSL_get_key_block_len returns the length of |ssl|'s key block. It is an error
- // to call this function during a handshake.
- OPENSSL_EXPORT size_t SSL_get_key_block_len(const SSL *ssl);
+ // SSL_get_ivs sets |*out_iv_len| to the length of the IVs for the ciphers
+ // underlying |ssl| and sets |*out_read_iv| and |*out_write_iv| to point to the
+ // current IVs for the read and write directions. This is only meaningful for
 diff --git a/ssl/internal.h b/ssl/internal.h
 index 9dd206e37..44f467814 100644
 --- a/ssl/internal.h
@@ -42,25 +40,24 @@ index 0bad2661a..42e6c3061 100644
 +
  BSSL_NAMESPACE_END
 diff --git a/ssl/ssl_lib.cc b/ssl/ssl_lib.cc
-index 10a97ea94..26ad1e318 100644
+index 26ffd5036..5757d924f 100644
 --- a/ssl/ssl_lib.cc
 +++ b/ssl/ssl_lib.cc
-@@ -2772,6 +2772,18 @@ int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
-   return 1;
+@@ -2917,6 +2917,17 @@ void SSL_set_renegotiate_mode(SSL *ssl, enum ssl_renegotiate_mode_t mode) {
+   ssl_maybe_shed_handshake_config(ssl);
  }
  
-+EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl)
-+{
++EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl) {
 +  return ssl->s3->aead_write_ctx.get()->Get_evp_aead_ctx();
 +}
 +
-+const uint8_t *SSL_get_write_iv_sequence(SSL *ssl, uint8_t **sequence, char *noad)
-+{
++const uint8_t *SSL_get_write_iv_sequence(SSL *ssl, uint64_t **sequence, char *noad) {
 +  *noad = ssl->s3->aead_write_ctx.get()->is_omit_ad();
-+  *sequence = ssl->s3->write_sequence;
++  *sequence = &ssl->s3->write_sequence;
 +  return ssl->s3->aead_write_ctx.get()->Get_fixed_nonce();
 +}
 +
- static uint64_t be_to_u64(const uint8_t in[8]) {
-   return (((uint64_t)in[0]) << 56) | (((uint64_t)in[1]) << 48) |
-          (((uint64_t)in[2]) << 40) | (((uint64_t)in[3]) << 32) |
++
+ int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
+                 const uint8_t **out_write_iv, size_t *out_iv_len) {
+   size_t write_iv_len;

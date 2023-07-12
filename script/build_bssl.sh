@@ -21,14 +21,9 @@ git reset --hard
 git checkout master
 git pull
 
-#git checkout 49de1fc291
-#git checkout bfe527fa35735e8e045cbfb42b012e13ca68f9cf
-#git checkout 251b5169fd44345f455438312ec4e18ae07fd58c
-#git checkout b117a3a0b7bd11fe6ebd503ec6b45d6b910b41a1
 # HTTP/3 v1 and ID-34 support
-#git checkout a2278d4d2cabe73f6663e3299ea7808edfa306b9
-#git checkout cf8d3ad3cea51cf7184307d54f465da62b7d8408
-git checkout a9670a8b476470e6f874fef3554e8059683e1413
+#git checkout a9670a8b476470e6f874fef3554e8059683e1413
+git checkout 9fc1c33e9c21439ce5f87855a6591a9324e569fd
 
 rm -rf build
 
