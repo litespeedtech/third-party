@@ -1,4 +1,4 @@
-#!/bin/sh
+
 cd `dirname "$0"`
 cd ..
 PREFIX=`pwd`
