@@ -9,7 +9,7 @@ cd src/ip2loc
 
 git reset --hard
 git pull
-git checkout 8.1.4
+git checkout 8.6.1
 
 autoreconf -i -v --force
 ./configure --prefix=$PREFIX -enable-shared=no 
