@@ -23,6 +23,7 @@ cd ..
 cd ..
 cd ../lib
 ar -rcT libabsl.a libabsl_*.a
+ranlib libabsl.a
 cd ../src
 
 if [ ! -d "re2" ]; then
