@@ -1,0 +1,79 @@
+diff --git a/absl/base/internal/sysinfo.cc b/absl/base/internal/sysinfo.cc
+index 8bcc4faf..1a816e41 100644
+--- a/absl/base/internal/sysinfo.cc
++++ b/absl/base/internal/sysinfo.cc
+@@ -441,6 +441,14 @@ pid_t GetTID() {
+   return reinterpret_cast<pid_t>(thread);
+ }
+ 
++#elif defined(__FreeBSD__)
++
++#include <pthread_np.h>
++
++pid_t GetTID() {
++  return static_cast<pid_t>(pthread_getthreadid_np());
++}
++
+ #else
+ 
+ // Fallback implementation of `GetTID` using `pthread_self`.
+diff --git a/absl/status/status.cc b/absl/status/status.cc
+index 26e68294..442b77ad 100644
+--- a/absl/status/status.cc
++++ b/absl/status/status.cc
+@@ -464,15 +464,19 @@ StatusCode ErrnoToStatusCode(int error_number) {
+     case EFAULT:        // Bad address
+     case EILSEQ:        // Illegal byte sequence
+     case ENOPROTOOPT:   // Protocol not available
++#ifdef ENOSTR
+     case ENOSTR:        // Not a STREAM
++#endif
+     case ENOTSOCK:      // Not a socket
+     case ENOTTY:        // Inappropriate I/O control operation
+     case EPROTOTYPE:    // Protocol wrong type for socket
+     case ESPIPE:        // Invalid seek
+       return StatusCode::kInvalidArgument;
+     case ETIMEDOUT:  // Connection timed out
++#ifdef ETIME
+     case ETIME:      // Timer expired
+       return StatusCode::kDeadlineExceeded;
++#endif
+     case ENODEV:  // No such device
+     case ENOENT:  // No such file or directory
+ #ifdef ENOMEDIUM
+@@ -530,9 +534,13 @@ StatusCode ErrnoToStatusCode(int error_number) {
+     case EMLINK:   // Too many links
+     case ENFILE:   // Too many open files in system
+     case ENOBUFS:  // No buffer space available
++#ifdef ENODATA
+     case ENODATA:  // No message is available on the STREAM read queue
++#endif
+     case ENOMEM:   // Not enough space
++#ifdef ENOSR
+     case ENOSR:    // No STREAM resources
++#endif
+ #ifdef EUSERS
+     case EUSERS:  // Too many users
+ #endif
+diff --git a/absl/time/internal/cctz/src/time_zone_format.cc b/absl/time/internal/cctz/src/time_zone_format.cc
+index 9b91f61c..afa81f80 100644
+--- a/absl/time/internal/cctz/src/time_zone_format.cc
++++ b/absl/time/internal/cctz/src/time_zone_format.cc
+@@ -18,11 +18,11 @@
+ #endif
+ #endif
+ 
+-#if defined(HAS_STRPTIME) && HAS_STRPTIME
+-#if !defined(_XOPEN_SOURCE) && !defined(__OpenBSD__)
+-#define _XOPEN_SOURCE 500  // Exposes definitions for SUSv2 (UNIX 98).
+-#endif
+-#endif
++//#if defined(HAS_STRPTIME) && HAS_STRPTIME
++//#if !defined(_XOPEN_SOURCE) && !defined(__OpenBSD__)
++//#define _XOPEN_SOURCE 500  // Exposes definitions for SUSv2 (UNIX 98).
++//#endif
++//#endif
+ 
+ #include "absl/base/config.h"
+ #include "absl/time/internal/cctz/include/cctz/time_zone.h"
+
