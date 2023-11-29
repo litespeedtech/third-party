@@ -22,8 +22,23 @@ cmake --build . --target install
 cd ..
 cd ..
 cd ../lib
-ar -rcT libabsl.a libabsl_*.a
-ranlib libabsl.a
+
+rm -rf tmp
+mkdir tmp
+cp libabsl_* tmp
+cd tmp
+
+for filename in libabsl_*.a; do
+        echo "$filename"
+        ar -x $filename
+done
+ar -qc libabsl.a *.o
+cp libabsl.a ..
+cd ..
+rm -rf tmp
+
+#ar -rcT libabsl.a libabsl_*.a
+#ranlib libabsl.a
 cd ../src
 
 if [ ! -d "re2" ]; then
