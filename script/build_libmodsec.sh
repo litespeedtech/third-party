@@ -18,7 +18,7 @@ cd ModSecurity
 git reset --hard
 git checkout -b v3/master origin/v3/master
 git pull
-git checkout v3.0.10
+git checkout v3.0.11
 
 export PATH=/home/build/tools/bin/:$PATH
 sh build.sh
