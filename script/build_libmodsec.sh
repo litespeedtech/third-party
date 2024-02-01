@@ -18,13 +18,13 @@ cd ModSecurity
 git reset --hard
 git checkout -b v3/master origin/v3/master
 git pull
-git checkout v3.0.11
+git checkout v3.0.12
 
 export PATH=/home/build/tools/bin/:$PATH
 sh build.sh
 git submodule init
 git submodule update
-CPPFLAGS="-fPIC $CPPFLAGS" ./configure --with-yajl=$PREFIX --with-geoip=$PREFIX --with-maxmind=$PREFIX --disable-shared --enable-static --with-pcre=$PREFIX --with-curl=$PREFIX --with-libxml=$PREFIX --with-lmdb=$PREFIX --with-lua=$PREFIX --disable-examples
+CPPFLAGS="-fPIC $CPPFLAGS" ./configure --with-yajl=$PREFIX --with-maxmind=$PREFIX --disable-shared --enable-static --with-pcre=$PREFIX --with-curl=$PREFIX --with-libxml=$PREFIX --with-lmdb=$PREFIX --with-lua=$PREFIX --disable-examples
 make -j4
 
 cp -r headers/modsecurity ../../include/
