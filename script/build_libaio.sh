@@ -16,4 +16,5 @@ rm $PACKAGE.tar.gz
 
 cd $PACKAGE
 make prefix=$PREFIX install
+rm $PREFIX/lib/libaio.so*
 
