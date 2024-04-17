@@ -3,7 +3,8 @@ cd `dirname "$0"`
 cd ..
 PREFIX=`pwd`
 cd src
-REMOTE_URL='https://git.openldap.org/openldap/openldap.git'
+REMOTE_URL='https://github.com/LMDB/lmdb.git'
+#'https://git.openldap.org/openldap/openldap.git'
 
 if [ -d "lmdb" ]  ; then
     CUR_REMOTE=`git config --file=./lmdb/.git/config --get remote.origin.url`
@@ -22,7 +23,7 @@ fi
 cd lmdb
 git checkout master
 git pull
-git checkout LMDB_0.9.27
+#git checkout LMDB_0.9.27B
     
     cd libraries/liblmdb/
     XCFLAGS=-fPIC make
@@ -35,6 +36,6 @@ git checkout LMDB_0.9.27
     cp *.h ../../../../include
     cp *.a ../../../../lib
     cd ../../../../
-    cp patches/libtool/liblmdb.la lib/liblmdb.la
-    echo "libdir='$PREFIX/lib'" >> lib/liblmdb.la
+ #   cp patches/libtool/liblmdb.la lib/liblmdb.la
+ #   echo "libdir='$PREFIX/lib'" >> lib/liblmdb.la
 
