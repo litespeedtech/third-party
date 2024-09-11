@@ -36,6 +36,6 @@ git pull
     cp *.h ../../../../include
     cp *.a ../../../../lib
     cd ../../../../
- #   cp patches/libtool/liblmdb.la lib/liblmdb.la
- #   echo "libdir='$PREFIX/lib'" >> lib/liblmdb.la
+    cp patches/libtool/liblmdb.la lib/liblmdb.la
+    echo "libdir='$PREFIX/lib'" >> lib/liblmdb.la
 
