@@ -26,7 +26,11 @@ rm -rf others/mbedtls
 git submodule init
 git submodule update
 CPPFLAGS="-fPIC $CPPFLAGS" ./configure --with-yajl=$PREFIX --with-maxmind=$PREFIX --disable-shared --enable-static --with-pcre=$PREFIX --with-curl=$PREFIX --with-libxml=$PREFIX --with-lmdb=$PREFIX --with-lua=$PREFIX --disable-examples
-make -j4
+if [ "$(uname -s)" = "FreeBSD" ] ; then
+    gmake -j$(nproc)
+else
+    make -j$(nproc)
+fi
 
 cp -r headers/modsecurity ../../include/
 cp src/.libs/libmodsecurity.a ../../lib/
