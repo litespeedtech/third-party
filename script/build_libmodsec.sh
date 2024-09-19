@@ -5,7 +5,7 @@ PREFIX=`pwd`
 cd src
 
 
-if [ ! -d lloyd-yajl-66cb08c ]; then
+if [ ! -d yajl-2.1.0 ]; then
     ../script/build_yajl.sh
     cd src
 fi
