@@ -10,10 +10,11 @@ if [ ! -d "isa-l" ]; then
 fi
 cd isa-l
 git reset --hard
-git checkout v2.26.0
+git checkout v2.31.0
 
 ./autogen.sh
 #CFLAGS="-O0 -g" ./configure --prefix=$PREFIX --enable-shared=no --enable-debug=yes
-./configure --prefix=$PREFIX --enable-shared=no 
+CFLAGS="-g2" ./configure --prefix=$PREFIX --enable-shared=no --enable-debug=yes 
+
 make install
 
