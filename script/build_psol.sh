@@ -41,7 +41,7 @@ public:
 }
 #endif
 
-EOF    
+EOF
 
 fi
 
