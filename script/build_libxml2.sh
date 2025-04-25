@@ -4,11 +4,11 @@ cd `dirname "$0"`
 cd ..
 PREFIX=`pwd`
 cd src
-
-if [ ! -e "libxml2" ] ; then
-    wget ftp://xmlsoft.org/libxml2/libxml2-2.9.8.tar.gz
-    tar xvfz libxml2-2.9.8.tar.gz
-    ln -sf libxml2-2.9.8 libxml2
+VERSION=2.14.2
+if [ ! -e "libxml2-$VERSION" ] ; then
+    wget https://download.gnome.org/sources/libxml2/2.14/libxml2-$VERSION.tar.xz
+    tar xvfJ libxml2-$VERSION.tar.xz
+    ln -sf libxml2-$VERSION libxml2
 fi
     cd libxml2
 
