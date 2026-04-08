@@ -13,6 +13,8 @@ cd quickjs
 #git reset --hard
 #git checkout v0.13.0
 
+export LDFLAGS="-lrt"
+
 mkdir build
 cd build
 cmake .. -DCMAKE_C_FLAGS="-fPIC"
