@@ -7,7 +7,7 @@ cd src
 
 cd udns
 make clean
-CFLAGS="-g -Wall -W -O2" ./configure
+CFLAGS="-g -Wall -W -O2" ./configure --disable-ipv6
 make
 cp udns.h ../../include
 cp libudns.a ../../lib
