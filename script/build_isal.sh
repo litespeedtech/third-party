@@ -6,7 +6,7 @@ cd src
 
 
 if [ ! -d "isa-l" ]; then
-    git clone https://github.com/intel/isa-l.git
+    git clone --depth 1 https://github.com/intel/isa-l.git
 fi
 cd isa-l
 git reset --hard

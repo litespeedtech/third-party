@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "ccronexpr" ]  ; then
-    git clone https://github.com/staticlibs/ccronexpr.git
+    git clone --depth 1 https://github.com/staticlibs/ccronexpr.git
 fi
     
 cd ccronexpr

@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "quickjs" ]; then
-    git clone https://github.com/quickjs-ng/quickjs.git
+    git clone --depth 1 https://github.com/quickjs-ng/quickjs.git
 fi
 cd quickjs
 

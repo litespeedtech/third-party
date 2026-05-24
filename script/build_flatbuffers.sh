@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "flatbuffers" ]; then
-    git clone https://github.com/google/flatbuffers.git
+    git clone --depth 1 https://github.com/google/flatbuffers.git
 fi
 cd flatbuffers
 

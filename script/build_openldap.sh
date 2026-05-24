@@ -6,7 +6,7 @@ cd src
 
 
 if [ ! -d openldap ]; then
-git clone https://github.com/openldap/openldap.git
+git clone --depth 1 https://github.com/openldap/openldap.git
 
 fi
 

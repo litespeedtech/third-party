@@ -12,7 +12,7 @@ fi
 
 
 if [ ! -d ModSecurity ]; then
-    git clone https://github.com/SpiderLabs/ModSecurity
+    git clone --depth 1 https://github.com/SpiderLabs/ModSecurity
 fi
 cd ModSecurity
 git reset --hard
