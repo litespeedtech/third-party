@@ -9,7 +9,7 @@ cd src
 #rm -rf libzmq
 
 if [ ! -d libzmq ]; then
-    git clone https://github.com/zeromq/libzmq.git
+    git clone --depth 1 https://github.com/zeromq/libzmq.git
 fi
     cd libzmq 
 

@@ -6,7 +6,7 @@ cd src
 
 
 if [ ! -d "xdp-tools" ]; then
-    git clone https://github.com/xdp-project/xdp-tools.git
+    git clone --depth 1 https://github.com/xdp-project/xdp-tools.git
 fi
 cd xdp-tools
 ./configure

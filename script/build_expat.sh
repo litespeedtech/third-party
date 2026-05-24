@@ -5,7 +5,7 @@ PREFIX=`pwd`
 
 cd src/
 
-git clone https://github.com/libexpat/libexpat.git
+git clone --depth 1 https://github.com/libexpat/libexpat.git
 
 cd libexpat
 

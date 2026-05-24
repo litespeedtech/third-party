@@ -6,7 +6,7 @@ cd src
 
 
 if [ ! -d "geoip-api-c" ]; then
-    git clone https://github.com/maxmind/geoip-api-c.git
+    git clone --depth 1 https://github.com/maxmind/geoip-api-c.git
 fi
 cd geoip-api-c
 git reset --hard

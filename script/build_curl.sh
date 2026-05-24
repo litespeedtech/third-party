@@ -7,7 +7,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "curl" ] ; then
-    git clone https://github.com/curl/curl.git
+    git clone --depth 1 https://github.com/curl/curl.git
 fi
 
     cd curl

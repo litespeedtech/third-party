@@ -17,7 +17,7 @@ if [ -d "lmdb" ]  ; then
 fi
 
 if [ ! -d "lmdb" ]  ; then
-    git clone https://git.openldap.org/openldap/openldap.git lmdb
+    git clone --depth 1 https://git.openldap.org/openldap/openldap.git lmdb
 fi
 
 cd lmdb

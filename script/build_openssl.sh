@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "openssl" ]; then
-    git clone https://github.com/openssl/openssl.git
+    git clone --depth 1 https://github.com/openssl/openssl.git
 fi
 
 #RELEASE=OpenSSL_1_1_1a

@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "phc-winner-argon2" ]; then
-    git clone https://github.com/P-H-C/phc-winner-argon2.git
+    git clone --depth 1 https://github.com/P-H-C/phc-winner-argon2.git
 fi
 cd phc-winner-argon2
 

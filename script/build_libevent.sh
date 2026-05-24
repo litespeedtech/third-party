@@ -8,7 +8,7 @@ cd src
 
 
 if [ ! -d libevent ]; then
-    git clone https://github.com/libevent/libevent.git
+    git clone --depth 1 https://github.com/libevent/libevent.git
 fi
     cd libevent
 

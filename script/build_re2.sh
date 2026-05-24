@@ -7,7 +7,7 @@ cd src
 
 # abseil is a requirement for re2
 if [ ! -d "abseil-cpp" ]; then
-    git clone https://github.com/abseil/abseil-cpp.git
+    git clone --depth 1 https://github.com/abseil/abseil-cpp.git
 fi
 cd abseil-cpp
 git checkout lts_2023_08_02
@@ -42,7 +42,7 @@ rm -rf tmp
 cd ../src
 
 if [ ! -d "re2" ]; then
-    git clone https://github.com/google/re2.git
+    git clone --depth 1 https://github.com/google/re2.git
 fi
 cd re2
 

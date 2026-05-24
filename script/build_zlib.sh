@@ -6,7 +6,7 @@ PREFIX=`pwd`
 cd src
 
 if [ ! -d "zlib" ]  ; then
-    git clone https://github.com/madler/zlib.git
+    git clone --depth 1 https://github.com/madler/zlib.git
 fi
     
 cd zlib
