@@ -18,14 +18,13 @@ cd ModSecurity
 git reset --hard
 git checkout -b v3/master origin/v3/master
 git pull
-git checkout v3.0.14
+git checkout v3.0.15
 
 export PATH=/home/build/tools/bin/:$PATH
 sh build.sh
 rm -rf others/mbedtls
-git submodule init
-git submodule update
-CPPFLAGS="-fPIC $CPPFLAGS" ./configure --with-yajl=$PREFIX --with-maxmind=$PREFIX --disable-shared --enable-static --with-pcre=$PREFIX --with-curl=$PREFIX --with-libxml=$PREFIX --with-lmdb=$PREFIX --with-lua=$PREFIX --disable-examples
+git submodule update --init --recursive
+CPPFLAGS="-fPIC $CPPFLAGS" ./configure --with-yajl=$PREFIX --with-maxmind=$PREFIX --disable-shared --enable-static --with-pcre2=$PREFIX --with-curl=$PREFIX --with-libxml=$PREFIX --with-lmdb=$PREFIX --with-lua=$PREFIX --disable-examples
 if [ "$(uname -s)" = "FreeBSD" ] ; then
     gmake -j$(nproc)
 else
