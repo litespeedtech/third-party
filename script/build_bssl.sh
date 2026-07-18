@@ -23,12 +23,15 @@ git pull
 
 # HTTP/3 v1 and ID-34 support
 #git checkout a9670a8b476470e6f874fef3554e8059683e1413
-git checkout 9fc1c33e9c21439ce5f87855a6591a9324e569fd
+#git checkout 9fc1c33e9c21439ce5f87855a6591a9324e569fd
+git checkout 8b43ff0f72137b31b23d482f0b2344186d797b03
 
 rm -rf build
 
 patch -p1 < ../../patches/boringssl/bssl_lstls.patch
 patch -p1 < ../../patches/boringssl/bssl_inttypes.patch
+patch -p1 < ../../patches/boringssl/bssl_apk_keep_privkey.patch
+
 #patch -p1 < ../../patches/boringssl/bssl_max_early_data_sz.patch
 #patch -p1 < ../../patches/boringssl/bssl_no_eoed.patch
 sed -i -e "s/-Werror//" CMakeLists.txt
@@ -49,9 +52,18 @@ cd ../decrepit
 make -j4
 cd ..
 
+if [ -f crypto/libcrypto.a ]; then
 cp crypto/libcrypto.a ../../../lib
 cp ssl/libssl.a    ../../../lib
 cp decrepit/libdecrepit.a ../../../lib
+fi
+
+if [ -f libcrypto.a ]; then
+cp libcrypto.a ../../../lib
+cp libssl.a    ../../../lib
+cp libdecrepit.a ../../../lib
+fi
+
 
 cd ..
 cp -r include/openssl ../../include/

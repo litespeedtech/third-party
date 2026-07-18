@@ -1,0 +1,18 @@
+diff --git a/ssl/ssl_credential.cc b/ssl/ssl_credential.cc
+index 06bc2cde6..201c88fa4 100644
+--- a/ssl/ssl_credential.cc
++++ b/ssl/ssl_credential.cc
+@@ -477,7 +477,11 @@ int SSL_CREDENTIAL_set_private_key_method(
+     return 0;
+   }
+ 
+-  cred_impl->privkey = nullptr;
++  // LiteSpeed patch: do NOT clear privkey. The async private-key sign callback
++  // (sslasyncpk.cpp) needs SSL_get_privatekey() to keep returning the real key
++  // so it can sign on a worker thread. Upstream a792f8804 added this null-ing;
++  // a key method and a privkey may safely coexist -- ssl_private_key_sign()
++  // prefers the method whenever it is set.
+   cred_impl->key_method = key_method;
+   return 1;
+ }
+
