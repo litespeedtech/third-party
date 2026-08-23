@@ -10,7 +10,7 @@ if [ ! -d "abseil-cpp" ]; then
     git clone https://github.com/abseil/abseil-cpp.git
 fi
 cd abseil-cpp
-git checkout lts_2023_08_02
+git checkout 20250127.2
 if [ ! -d "build" ]; then
     mkdir build
 fi
