@@ -3,22 +3,25 @@ cd `dirname "$0"`
 cd ..
 PREFIX=`pwd`
 
+if [ -d ".git/modules/src/libinjection" ]; then
 
-cd src/libinjection
-git reset --hard
-git checkout v3.10.0
+git submodule deinit -f src/libinjection
+git rm -f src/libinjection
+rm -rf .git/modules/src/libinjection
+
+if 
+
 cd src
-
-PYFULLVER=$(/usr/bin/env python --version)
-PYVER=$(echo "$PYFULLVER" | cut -c 8)
-if [ "$PYVER" = "3" ]; then
-   echo "Change python scripts to use Python2"
-   sed -i 's~/usr/bin/env python~/usr/bin/env python2~' *.py
+if [ ! -d "libinjection" ]; then
+    git clone https://github.com/libinjection/libinjection
 fi
-cd ..
-make
-cp src/*.h ../../include
-cp src/libinjection.a ../../lib
+cd libinjection
 
-cd ../..
-ranlib lib/libinjection.a
+git reset --hard
+git checkout main
+git checkout v4.0.0
+
+./autogen.sh
+CPPFLAGS="-I../../include -fPIC" ./configure --prefix=$PREFIX 
+make install
+
