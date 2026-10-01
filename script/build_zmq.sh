@@ -15,7 +15,7 @@ fi
 
     git reset --hard
     git pull
-    git checkout v4.3.3
+    git checkout v4.3.5
 
     mkdir build
     cd build
