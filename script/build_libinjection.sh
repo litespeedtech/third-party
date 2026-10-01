@@ -8,8 +8,9 @@ if [ -d ".git/modules/src/libinjection" ]; then
 git submodule deinit -f src/libinjection
 git rm -f src/libinjection
 rm -rf .git/modules/src/libinjection
+rm -f src/libinjection
 
-if 
+fi 
 
 cd src
 if [ ! -d "libinjection" ]; then
