@@ -1,0 +1,16 @@
+diff --git a/crypto/fipsmodule/keccak/keccak.cc.inc b/crypto/fipsmodule/keccak/keccak.cc.inc
+index 83b864717..94e00d516 100644
+--- a/crypto/fipsmodule/keccak/keccak.cc.inc
++++ b/crypto/fipsmodule/keccak/keccak.cc.inc
+@@ -176,6 +176,10 @@ KECCAK_X4_TARGET static inline void v4_rotl(v4u64 *x, int shift) {
+   *x = (*x << shift) | (*x >> ((-shift) & 63));
+ }
+
++// Match the vector instantiation's target to its caller. Otherwise GCC 9.1 may
++// ICE while expanding debug locations for inlined vector temporaries.
++template KECCAK_X4_TARGET void keccak_f<v4u64, v4_rotl>(v4u64 state[25]);
++
+ KECCAK_X4_TARGET static void keccak_f_x4(uint64_t state0[25],
+                                          uint64_t state1[25],
+                                          uint64_t state2[25],
+
