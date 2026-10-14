@@ -1,63 +1,60 @@
+diff --git a/include/openssl/ssl.h b/include/openssl/ssl.h
 --- a/include/openssl/ssl.h
 +++ b/include/openssl/ssl.h
-@@ -4015,6 +4015,11 @@ OPENSSL_EXPORT int SSL_CTX_get_ex_new_index(long argl, void *argp,
+@@ -4857,6 +4857,20 @@
+
  
  // Low-level record-layer state.
- 
-+OPENSSL_EXPORT EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl);
-+OPENSSL_EXPORT const uint8_t *SSL_get_write_iv_sequence(SSL *ssl,
-+                                                        uint64_t **sequence,
-+                                                        char *noad);
 +
- // SSL_get_ivs sets |*out_iv_len| to the length of the IVs for the ciphers
- // underlying |ssl| and sets |*out_read_iv| and |*out_write_iv| to point to the
- // current IVs for the read and write directions. This is only meaningful for
++// SSL_get_write_aead_ctx returns the borrowed write AEAD context. This is for
++// TLS connections with an installed write cipher. The pointer is valid until
++// the write cipher is replaced or the connection is freed.
++OPENSSL_EXPORT EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl);
++
++// SSL_get_write_iv_sequence returns the borrowed fixed write nonce and sets
++// `*sequence` to the live, writable TLS record counter. Callers generating
++// records externally must keep this counter synchronized. `*noad` is always
++// zero: current BoringSSL record ciphers require additional authenticated data.
++// The nonce pointer has the same lifetime as `SSL_get_write_aead_ctx`.
++OPENSSL_EXPORT const uint8_t *SSL_get_write_iv_sequence(SSL *ssl,
++                                                     uint64_t **sequence,
++                                                     char *noad);
+
+ // SSL_get_ivs sets `*out_iv_len` to the length of the IVs for the ciphers
+ // underlying `ssl` and sets `*out_read_iv` and `*out_write_iv` to point to the
 diff --git a/ssl/internal.h b/ssl/internal.h
-index 9dd206e37..44f467814 100644
 --- a/ssl/internal.h
 +++ b/ssl/internal.h
-@@ -849,7 +849,11 @@ class SSLAEADContext {
- 
+@@ -560,6 +560,10 @@
+                    const uint8_t *extra_in, size_t extra_in_len);
+
    bool GetIV(const uint8_t **out_iv, size_t *out_iv_len) const;
- 
-- private:
++
 +  EVP_AEAD_CTX *Get_evp_aead_ctx() { return ctx_.get(); }
-+  const uint8_t *Get_fixed_nonce() const { return fixed_nonce_; }
++  const uint8_t *Get_fixed_nonce() const { return fixed_nonce_.data(); }
 +  bool is_omit_ad() const { return false; }
-+
-+private:
-   // GetAdditionalData returns the additional data, writing into |storage| if
-   // necessary.
-   Span<const uint8_t> GetAdditionalData(uint8_t storage[13], uint8_t type,
-diff --git a/ssl/ssl_aead_ctx.cc b/ssl/ssl_aead_ctx.cc
-index 0bad2661a..42e6c3061 100644
---- a/ssl/ssl_aead_ctx.cc
-+++ b/ssl/ssl_aead_ctx.cc
-@@ -429,4 +429,5 @@ bool SSLAEADContext::GetIV(const uint8_t **out_iv, size_t *out_iv_len) const {
-          EVP_AEAD_CTX_get_iv(ctx_.get(), out_iv, out_iv_len);
- }
- 
-+
- BSSL_NAMESPACE_END
+
+  private:
+   // GetAdditionalData returns the additional data, writing into `storage` if
 diff --git a/ssl/ssl_lib.cc b/ssl/ssl_lib.cc
-index 26ffd5036..5757d924f 100644
 --- a/ssl/ssl_lib.cc
 +++ b/ssl/ssl_lib.cc
-@@ -2917,6 +2917,17 @@ void SSL_set_renegotiate_mode(SSL *ssl, enum ssl_renegotiate_mode_t mode) {
-   ssl_maybe_shed_handshake_config(ssl);
+@@ -3052,6 +3052,18 @@
+   ssl_maybe_shed_handshake_config(ssl_impl);
  }
- 
+
 +EVP_AEAD_CTX *SSL_get_write_aead_ctx(SSL *ssl) {
-+  return ssl->s3->aead_write_ctx.get()->Get_evp_aead_ctx();
++  auto *ssl_impl = FromOpaque(ssl);
++  return ssl_impl->s3->aead_write_ctx->Get_evp_aead_ctx();
 +}
 +
 +const uint8_t *SSL_get_write_iv_sequence(SSL *ssl, uint64_t **sequence, char *noad) {
-+  *noad = ssl->s3->aead_write_ctx.get()->is_omit_ad();
-+  *sequence = &ssl->s3->write_sequence;
-+  return ssl->s3->aead_write_ctx.get()->Get_fixed_nonce();
++  auto *ssl_impl = FromOpaque(ssl);
++  *noad = ssl_impl->s3->aead_write_ctx->is_omit_ad();
++  *sequence = &ssl_impl->s3->write_sequence;
++  return ssl_impl->s3->aead_write_ctx->Get_fixed_nonce();
 +}
-+
 +
  int SSL_get_ivs(const SSL *ssl, const uint8_t **out_read_iv,
                  const uint8_t **out_write_iv, size_t *out_iv_len) {
-   size_t write_iv_len;
+   // No cipher suites maintain stateful internal IVs in DTLS. It would not be

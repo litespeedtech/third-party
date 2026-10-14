@@ -18,17 +18,23 @@ fi
 
 cd boringssl
 git reset --hard
-git checkout master
+git checkout main
 git pull
 
 # HTTP/3 v1 and ID-34 support
 #git checkout a9670a8b476470e6f874fef3554e8059683e1413
-git checkout 9fc1c33e9c21439ce5f87855a6591a9324e569fd
+#git checkout 9fc1c33e9c21439ce5f87855a6591a9324e569fd
+git checkout 8b43ff0f72137b31b23d482f0b2344186d797b03
 
 rm -rf build
 
 patch -p1 < ../../patches/boringssl/bssl_lstls.patch
 patch -p1 < ../../patches/boringssl/bssl_inttypes.patch
+patch -p1 < ../../patches/boringssl/bssl_apk_keep_privkey.patch
+
+#for gcc9 on centos6 only.
+#patch -p1 < ../../patches/boringssl/bssl_gcc9_keccak.patch
+
 #patch -p1 < ../../patches/boringssl/bssl_max_early_data_sz.patch
 #patch -p1 < ../../patches/boringssl/bssl_no_eoed.patch
 sed -i -e "s/-Werror//" CMakeLists.txt
@@ -40,19 +46,27 @@ if [ "$(uname -m)" = "aarch64" ]; then
 else
     cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
 fi
+
+#for centos6 only.
 #cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC" -DCMAKE_CXX_FLAGS="-fPIC -DOPENSSL_C11_ATOMIC"
+
 make -j4
 
-cd ssl
-make -j4
-cd ../decrepit
-make -j4
-cd ..
 
+if [ -f crypto/libcrypto.a ]; then
 cp crypto/libcrypto.a ../../../lib
 cp ssl/libssl.a    ../../../lib
 cp decrepit/libdecrepit.a ../../../lib
+fi
+
+if [ -f libcrypto.a ]; then
+cp libcrypto.a ../../../lib
+cp libssl.a    ../../../lib
+cp libdecrepit.a ../../../lib
+fi
+
 
 cd ..
+rm -rf ../../include/openssl
 cp -r include/openssl ../../include/
 
