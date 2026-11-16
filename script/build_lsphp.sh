@@ -10,7 +10,7 @@ else
     PACKAGE=php-8.5.2
 fi
 
-LSAPI_VERSION=8.3
+LSAPI_VERSION=8.4
 
 if [ ! -d $PACKAGE ]; then
     wget https://www.php.net/distributions/$PACKAGE.tar.gz
